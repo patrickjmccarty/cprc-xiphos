@@ -69,6 +69,10 @@ position 255: 3000 + 127*11 = 4397 ticks, 4397/(16E6/8/1000) = 2.1985 ms
 SERVO_RANGE_EXTENDED4 - Extended range, using a multiplier of 12:
 position 0:   3000 - 128*12 = 1464 ticks, 1464/(16E6/8/1000) = 0.732 ms
 position 255: 3000 + 127*12 = 4524 ticks, 4524/(16E6/8/1000) = 2.262 ms
+
+The theoretical maximum range multiplier that could be used with all 8 servos enabled would be 15.
+This is because 20 [ms] / 8 [servos] = 2.5 [ms/servo] and a range multiplier of 16 or above would
+result in a max position with a pulse width longer than 2.5 ms, so the 20 ms servo period would not be met.
 */
 
 /*! Sets the pulse-width range of a servo.
@@ -100,7 +104,7 @@ void servo(const u08 servoNum, const u08 position)
 	if (servoNum < NUM_SERVOS)
 	{
 		//Set the highTime for the servo, based on the configured range and commanded position.
-		servoHighTime[servoNum] = 3000 + (servoRangeValues[servoNum] * (position - 127));
+		servoHighTime[servoNum] = 3000 + (servoRangeValues[servoNum] * (position - 128));
 
 		//Set the lowTime for the servo to fill the remaining time for this servo period.
 		servoLowTime[servoNum] = MAX_PERIOD - servoHighTime[servoNum];
