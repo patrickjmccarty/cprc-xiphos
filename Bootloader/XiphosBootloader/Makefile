@@ -224,7 +224,7 @@ AVRDUDE_PORT = usb
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 
-AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
+AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) -B 100
 
 
 # ---------------------------------------------------------------------------
@@ -302,7 +302,7 @@ program: $(TARGET).hex
 # DON'T MODIFY THESE LINES UNLESS YOU *REALLY* KNOW WHAT YOU ARE DOING!
 # YOU CAN PERMANENTLY LOSE THE ABILITY TO REPROGRAM YOUR CHIP!!!
 fuses:
-	$(AVRDUDE) -v -u $(AVRDUDE_FLAGS) -U efuse:w:0xFD:m -U hfuse:w:0x90:m -U lfuse:w:0xDF:m
+	$(AVRDUDE) -v -u $(AVRDUDE_FLAGS) -U efuse:w:0xF5:m -U hfuse:w:0x90:m -U lfuse:w:0xDF:m
 
 # This just shows a ton of info, with the last few lines indicating the fuses.
 readfuses:
